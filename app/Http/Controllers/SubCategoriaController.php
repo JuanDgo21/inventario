@@ -83,7 +83,7 @@ class SubCategoriaController extends Controller
     public function destroy(string $id)
     {
         if (auth()->user()->role === 'coordinador') {
-            abort(403, 'No tienes permiso para eliminar categorías.');
+            abort(403, 'No tienes permiso para eliminar subcategorías.');
         }
         $subcategoria = SubCategoria::findOrFail($id);
         $subcategoria->delete();
