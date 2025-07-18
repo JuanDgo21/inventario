@@ -28,7 +28,7 @@ Route::resource('productos', ProductoController::class);
 
 
 
-Route::middleware('auth','admin')->group(function(){
+Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(function() {
     Route::resource('usuarios', UserController::class);
 });
 

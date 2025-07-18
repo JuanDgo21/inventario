@@ -31,13 +31,10 @@
                           {{ __('Productos') }}
                      </x-nav-link>
 
-                    @auth
-                        @if (auth()->user()->role === 'admin')
-                            <x-nav-link :href="route('usuarios.index')" :active="request()->routeIs('usuarios.index')">
-                                {{ __('Usuarios') }}
-                            </x-nav-link>
-                        @endif
-                    @endauth
+                    <x-nav-link :href="route('usuarios.index')" :active="request()->routeIs('usuarios.index')">
+                          {{ __('Usuarios') }}
+                    </x-nav-link>
+                    
                 </div>
             </div>
 

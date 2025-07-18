@@ -14,13 +14,15 @@ class AdminMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
-    {
-        if (auth()->check() && auth()->user()->role === 'admin'){
-            return $next($request);
-        }
-        abort(403, 'no tienes permisos de Administrador');
-
-        
-
+{
+    if (!auth()->check()) {
+        return redirect()->route('login');
     }
+
+    if (!in_array(auth()->user()->role, ['admin', 'coordinador'])) {
+        abort(403, 'No tienes permisos para acceder a esta sección');
+    }
+
+    return $next($request);
+}
 }

@@ -14,7 +14,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('users.index', compact('users'));
+        return view('usuarios.index', compact('users'));
     }
 
     /**
@@ -22,7 +22,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        return view('usuarios.create');
     }
 
     /**
@@ -44,7 +44,7 @@ class UserController extends Controller
             'role' => $request->role,
         ]);
 
-        return redirect()->route('users.index')->with('success', 'Usuario creado correctamente.');
+        return redirect()->route('usuarios.index')->with('success', 'Usuario creado correctamente.');
     }
 
     /**
@@ -53,7 +53,7 @@ class UserController extends Controller
     public function show(string $id)
     {
         $user = User::findOrFail($id);
-        return view('users.show', compact('user'));
+        return view('usuarios.show', compact('user'));
     }
 
     /**
@@ -62,7 +62,14 @@ class UserController extends Controller
     public function edit(string $id)
     {
         $user = User::findOrFail($id);
-        return view('users.edit', compact('user'));
+
+        if (auth()->user()->role === 'coordinador') {
+            if ($user->role !== 'coordinador') {
+                abort(403, 'Solo puedes editar otros coordinadores');
+            }
+        }
+
+        return view('usuarios.editar', compact('user'));
     }
 
     /**
@@ -80,13 +87,15 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
-        if ($request->filled('password')) {
+
+        if (!empty($request->password)) {
             $user->password = bcrypt($request->password);
         }
+
         $user->role = $request->role;
         $user->update();
 
-        return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente.');
+        return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado correctamente.');
     }
 
     /**
@@ -101,6 +110,6 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->route('users.index')->with('success', 'Usuario eliminado correctamente.');
+        return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado correctamente.');
     }
 }

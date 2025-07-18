@@ -9,6 +9,6 @@
         <p class="mb-2"><span class="font-bold text-gray-700 dark:text-gray-200">Nombre:</span> {{ $user->name }}</p>
         <p class="mb-2"><span class="font-bold text-gray-700 dark:text-gray-200">Correo Electrónico:</span> {{ $user->email }}</p>
         <p class="mb-4"><span class="font-bold text-gray-700 dark:text-gray-200">Rol:</span> {{ $user->role }}</p>
-        <a href="{{ route('users.index') }}" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition">Volver</a>
+        <a href="{{ route('usuarios.index') }}" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition">Volver</a>
     </div>
 </x-app-layout>
